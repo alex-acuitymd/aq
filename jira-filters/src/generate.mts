@@ -2,35 +2,66 @@ import { EOL } from "os";
 import type { Component, TeamComponents } from "./types.mjs";
 
 export default function generate(teamComponents: TeamComponents) {
-  return page(h1("Jira Components"), "", ...getTeamFilterTable(teamComponents));
-}
-
-function getTeamFilterTable(teamComponents: TeamComponents) {
-  return table(
-    ["team", "filter"],
-    [
-      ...[...teamComponents.keys()].map((k) => {
-        const components = teamComponents.get(k);
-        if (components) {
-          return [k, teamFilter(components)];
-        } else {
-          return [k, ""];
-        }
-      }),
-    ]
+  return page(
+    h1("all"),
+    ...teamFilterTable(teamComponents, componentsFilter),
+    "",
+    h1("all l30"),
+    ...teamFilterTable(teamComponents, (components) =>
+      and([componentsFilter(components), createdLastThirtyDays])
+    ),
+    "",
+    h1("all bugs l30"),
+    ...teamFilterTable(teamComponents, (components) =>
+      and([componentsFilter(components), bug, createdLastThirtyDays])
+    ),
+    "",
+    h1("all tasks l30"),
+    ...teamFilterTable(teamComponents, (components) =>
+      and([componentsFilter(components), task, createdLastThirtyDays])
+    ),
+    "",
+    h1("unresolved bugs"),
+    ...teamFilterTable(teamComponents, (components) =>
+      and([componentsFilter(components), bug, unresolved])
+    ),
+    "",
+    h1("unresolved tasks"),
+    ...teamFilterTable(teamComponents, (components) =>
+      and([componentsFilter(components), task, unresolved])
+    )
   );
 }
 
-function teamFilter(components: Set<Component>) {
-  return or(...[...components].map(componentFilter));
+// filters
+const unresolved = "statusCategory != Done";
+const bug = "type = Bug";
+const task = "type = Task";
+const createdLastThirtyDays = "created >= -30d";
+
+function componentsFilter(components: Set<Component>) {
+  return and([
+    or([...components].map((c) => `component = "${c}"`)),
+    "project = APPL",
+  ]);
 }
 
-function componentFilter(c: string) {
-  return `component = "${c}”`;
+function or(s: string[]) {
+  return perens(s.join(" OR "));
 }
 
-function or(...c: string[]) {
-  return "(" + c.join(" OR ") + ")";
+// filter combination
+function and(s: string[]) {
+  return perens(s.join(" AND "));
+}
+
+function perens(s: string) {
+  return `( ${s} )`;
+}
+
+// markdown
+function link(s: string) {
+  return `[link](https://acuitymd.atlassian.net/issues/?jql=${encodeURI(s)})`;
 }
 
 function page(...lines: string[]) {
@@ -39,6 +70,22 @@ function page(...lines: string[]) {
 
 function h1(s: string) {
   return `# ${s}`;
+}
+
+function teamFilterTable(
+  teamComponents: TeamComponents,
+  filter: (components: Set<Component>) => string
+) {
+  return table(
+    ["team", "filter", "link"],
+    [
+      ...[...teamComponents.keys()].map((k) => {
+        const filterString = filter(teamComponents.get(k) || new Set());
+        const filterLink = link(filterString);
+        return [k, filterString, filterLink];
+      }),
+    ]
+  );
 }
 
 function table(headerRow: string[], body: string[][]) {
