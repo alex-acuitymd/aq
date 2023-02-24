@@ -3,7 +3,7 @@ import { EOL } from "node:os";
 import type { Component, Team, TeamComponents } from "./types.mjs";
 
 export default function read() {
-  const arr = readFileSync("./component_ownership.csv")
+  const arr = readFileSync("./resource/component_ownership.csv")
     .toString()
     .split(EOL)
     .slice(1)
