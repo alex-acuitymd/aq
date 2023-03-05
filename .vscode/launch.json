@@ -2,12 +2,12 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "jira-filters",
+        "name": "jira",
         "type": "node",
         "request": "launch",
-        "args": ["${workspaceFolder}/jira-filters/src/main.mts"],
+        "args": ["${workspaceFolder}/jira/src/main.mts"],
         "runtimeArgs": ["-r", "ts-node/register", "--loader", "ts-node/esm"],
-        "cwd": "${workspaceRoot}/jira-filters",
+        "cwd": "${workspaceRoot}/jira",
         "internalConsoleOptions": "openOnSessionStart"
       }
     ]

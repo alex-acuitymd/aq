@@ -1,0 +1,426 @@
+{
+  "cloud": true,
+  "rules": [
+    {
+      "id": 10440318,
+      "clientKey": "e53e4be4-c654-354e-aa94-71b6a856b2e5",
+      "name": "zzz_aq_components",
+      "state": "DISABLED",
+      "description": "",
+      "authorAccountId": "6001b7bb91bb2e01083f41ed",
+      "actor": {
+        "type": "ACCOUNT_ID",
+        "value": "557058:f58131cb-b67d-43c7-b30d-6b58d40bd077"
+      },
+      "created": 1677511922278,
+      "updated": 1678033544741,
+      "trigger": {
+        "id": "224960425",
+        "component": "TRIGGER",
+        "parentId": null,
+        "conditionParentId": null,
+        "schemaVersion": 1,
+        "type": "jira.manual.trigger.issue",
+        "value": {
+          "groups": [],
+          "inputFromUsers": false,
+          "inputPrompts": []
+        },
+        "children": [],
+        "conditions": [],
+        "connectionId": null
+      },
+      "components": [
+        {
+          "id": "224960426",
+          "component": "CONDITION",
+          "parentId": null,
+          "conditionParentId": null,
+          "schemaVersion": 1,
+          "type": "jira.condition.container.block",
+          "value": null,
+          "children": [
+            {
+              "id": "224960427",
+              "component": "CONDITION_BLOCK",
+              "parentId": "224960426",
+              "conditionParentId": null,
+              "schemaVersion": 1,
+              "type": "jira.condition.if.block",
+              "value": {
+                "conditionMatchType": "ALL"
+              },
+              "children": [
+                {
+                  "id": "224960429",
+                  "component": "ACTION",
+                  "parentId": "224960427",
+                  "conditionParentId": null,
+                  "schemaVersion": 10,
+                  "type": "jira.issue.edit",
+                  "value": {
+                    "operations": [
+                      {
+                        "field": {
+                          "type": "ID",
+                          "value": "labels"
+                        },
+                        "fieldType": "labels",
+                        "type": "ADDREMOVE",
+                        "value": {
+                          "ADD": [
+                            {
+                              "type": "FREE",
+                              "value": "components:Bear"
+                            }
+                          ],
+                          "REMOVE": []
+                        }
+                      }
+                    ],
+                    "advancedFields": null,
+                    "sendNotifications": false
+                  },
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "conditions": [
+                {
+                  "id": "224960428",
+                  "component": "CONDITION",
+                  "parentId": null,
+                  "conditionParentId": "224960427",
+                  "schemaVersion": 1,
+                  "type": "jira.jql.condition",
+                  "value": "( ( component = \"Account Settings UI\" OR component = \"Admin UI\" OR component = \"App UI\" OR component = \"Authentication\" OR component = \"CI / CD\" OR component = \"Notification UI\" OR component = \"Playground UI\" OR component = \"Territories QBT\" OR component = \"Territories UI\" OR component = \"UI Component Library\" OR component = \"Usage Tracking\" ) AND project = APPL )",
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "connectionId": null
+            },
+            {
+              "id": "224960427",
+              "component": "CONDITION_BLOCK",
+              "parentId": "224960426",
+              "conditionParentId": null,
+              "schemaVersion": 1,
+              "type": "jira.condition.if.block",
+              "value": {
+                "conditionMatchType": "ALL"
+              },
+              "children": [
+                {
+                  "id": "224960429",
+                  "component": "ACTION",
+                  "parentId": "224960427",
+                  "conditionParentId": null,
+                  "schemaVersion": 10,
+                  "type": "jira.issue.edit",
+                  "value": {
+                    "operations": [
+                      {
+                        "field": {
+                          "type": "ID",
+                          "value": "labels"
+                        },
+                        "fieldType": "labels",
+                        "type": "ADDREMOVE",
+                        "value": {
+                          "ADD": [],
+                          "REMOVE": [
+                            {
+                              "type": "FREE",
+                              "value": "components:Bear"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "advancedFields": null,
+                    "sendNotifications": false
+                  },
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "conditions": [],
+              "connectionId": null
+            }
+          ],
+          "conditions": [],
+          "connectionId": null
+        },
+        {
+          "id": "224960426",
+          "component": "CONDITION",
+          "parentId": null,
+          "conditionParentId": null,
+          "schemaVersion": 1,
+          "type": "jira.condition.container.block",
+          "value": null,
+          "children": [
+            {
+              "id": "224960427",
+              "component": "CONDITION_BLOCK",
+              "parentId": "224960426",
+              "conditionParentId": null,
+              "schemaVersion": 1,
+              "type": "jira.condition.if.block",
+              "value": {
+                "conditionMatchType": "ALL"
+              },
+              "children": [
+                {
+                  "id": "224960429",
+                  "component": "ACTION",
+                  "parentId": "224960427",
+                  "conditionParentId": null,
+                  "schemaVersion": 10,
+                  "type": "jira.issue.edit",
+                  "value": {
+                    "operations": [
+                      {
+                        "field": {
+                          "type": "ID",
+                          "value": "labels"
+                        },
+                        "fieldType": "labels",
+                        "type": "ADDREMOVE",
+                        "value": {
+                          "ADD": [
+                            {
+                              "type": "FREE",
+                              "value": "components:Lion"
+                            }
+                          ],
+                          "REMOVE": []
+                        }
+                      }
+                    ],
+                    "advancedFields": null,
+                    "sendNotifications": false
+                  },
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "conditions": [
+                {
+                  "id": "224960428",
+                  "component": "CONDITION",
+                  "parentId": null,
+                  "conditionParentId": "224960427",
+                  "schemaVersion": 1,
+                  "type": "jira.jql.condition",
+                  "value": "( ( component = \"Activity UI\" OR component = \"Education UI\" OR component = \"ESP\" OR component = \"Industry Relationships UI\" OR component = \"JT\" OR component = \"Omnisearch UI\" OR component = \"Peer Networks UI\" OR component = \"Pipeline UI\" OR component = \"Profile UI\" OR component = \"Publications UI\" OR component = \"Recs\" OR component = \"Shared Filters\" OR component = \"Targeting List UI\" ) AND project = APPL )",
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "connectionId": null
+            },
+            {
+              "id": "224960427",
+              "component": "CONDITION_BLOCK",
+              "parentId": "224960426",
+              "conditionParentId": null,
+              "schemaVersion": 1,
+              "type": "jira.condition.if.block",
+              "value": {
+                "conditionMatchType": "ALL"
+              },
+              "children": [
+                {
+                  "id": "224960429",
+                  "component": "ACTION",
+                  "parentId": "224960427",
+                  "conditionParentId": null,
+                  "schemaVersion": 10,
+                  "type": "jira.issue.edit",
+                  "value": {
+                    "operations": [
+                      {
+                        "field": {
+                          "type": "ID",
+                          "value": "labels"
+                        },
+                        "fieldType": "labels",
+                        "type": "ADDREMOVE",
+                        "value": {
+                          "ADD": [],
+                          "REMOVE": [
+                            {
+                              "type": "FREE",
+                              "value": "components:Lion"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "advancedFields": null,
+                    "sendNotifications": false
+                  },
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "conditions": [],
+              "connectionId": null
+            }
+          ],
+          "conditions": [],
+          "connectionId": null
+        },
+        {
+          "id": "224960426",
+          "component": "CONDITION",
+          "parentId": null,
+          "conditionParentId": null,
+          "schemaVersion": 1,
+          "type": "jira.condition.container.block",
+          "value": null,
+          "children": [
+            {
+              "id": "224960427",
+              "component": "CONDITION_BLOCK",
+              "parentId": "224960426",
+              "conditionParentId": null,
+              "schemaVersion": 1,
+              "type": "jira.condition.if.block",
+              "value": {
+                "conditionMatchType": "ALL"
+              },
+              "children": [
+                {
+                  "id": "224960429",
+                  "component": "ACTION",
+                  "parentId": "224960427",
+                  "conditionParentId": null,
+                  "schemaVersion": 10,
+                  "type": "jira.issue.edit",
+                  "value": {
+                    "operations": [
+                      {
+                        "field": {
+                          "type": "ID",
+                          "value": "labels"
+                        },
+                        "fieldType": "labels",
+                        "type": "ADDREMOVE",
+                        "value": {
+                          "ADD": [
+                            {
+                              "type": "FREE",
+                              "value": "components:Tiger"
+                            }
+                          ],
+                          "REMOVE": []
+                        }
+                      }
+                    ],
+                    "advancedFields": null,
+                    "sendNotifications": false
+                  },
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "conditions": [
+                {
+                  "id": "224960428",
+                  "component": "CONDITION",
+                  "parentId": null,
+                  "conditionParentId": "224960427",
+                  "schemaVersion": 1,
+                  "type": "jira.jql.condition",
+                  "value": "( ( component = \"Clinical Practice UI\" OR component = \"Explore QBT\" OR component = \"Explore UI\" OR component = \"Markets QBT\" OR component = \"Markets UI\" OR component = \"Payer Mix UI\" OR component = \"QBT Core\" OR component = \"Referrals QBT\" OR component = \"Referrals UI\" OR component = \"Targeting QBT\" OR component = \"Targeting Table UI\" OR component = \"Targeting UI\" ) AND project = APPL )",
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "connectionId": null
+            },
+            {
+              "id": "224960427",
+              "component": "CONDITION_BLOCK",
+              "parentId": "224960426",
+              "conditionParentId": null,
+              "schemaVersion": 1,
+              "type": "jira.condition.if.block",
+              "value": {
+                "conditionMatchType": "ALL"
+              },
+              "children": [
+                {
+                  "id": "224960429",
+                  "component": "ACTION",
+                  "parentId": "224960427",
+                  "conditionParentId": null,
+                  "schemaVersion": 10,
+                  "type": "jira.issue.edit",
+                  "value": {
+                    "operations": [
+                      {
+                        "field": {
+                          "type": "ID",
+                          "value": "labels"
+                        },
+                        "fieldType": "labels",
+                        "type": "ADDREMOVE",
+                        "value": {
+                          "ADD": [],
+                          "REMOVE": [
+                            {
+                              "type": "FREE",
+                              "value": "components:Tiger"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "advancedFields": null,
+                    "sendNotifications": false
+                  },
+                  "children": [],
+                  "conditions": [],
+                  "connectionId": null
+                }
+              ],
+              "conditions": [],
+              "connectionId": null
+            }
+          ],
+          "conditions": [],
+          "connectionId": null
+        }
+      ],
+      "canOtherRuleTrigger": false,
+      "notifyOnError": "FIRSTERROR",
+      "projects": [
+        {
+          "projectId": "10006",
+          "projectTypeKey": "software"
+        }
+      ],
+      "labels": [],
+      "tags": [],
+      "ruleScope": {
+        "resources": [
+          "ari:cloud:jira:90705784-acb9-400f-96b7-5564fe1c88db:project/10006"
+        ]
+      },
+      "writeAccessType": "UNRESTRICTED",
+      "collaborators": []
+    }
+  ]
+}
