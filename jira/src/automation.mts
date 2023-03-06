@@ -45,7 +45,9 @@ export function rule(
   } as const;
 }
 
-export type Trigger = typeof manualTrigger;
+export type Trigger =
+  | typeof manualTrigger
+  | ReturnType<typeof fieldChangeTrigger>;
 export const manualTrigger = {
   id: "224960425",
   component: "TRIGGER",
@@ -58,6 +60,25 @@ export const manualTrigger = {
   conditions: [],
   connectionId: null,
 };
+
+export function fieldChangeTrigger(fieldValue: string) {
+  return {
+    id: "225360019",
+    component: "TRIGGER",
+    parentId: null,
+    conditionParentId: null,
+    schemaVersion: 2,
+    type: "jira.issue.field.changed",
+    value: {
+      changeType: "ANY_CHANGE",
+      fields: [{ value: fieldValue, type: "field" }],
+      actions: [],
+    },
+    children: [],
+    conditions: [],
+    connectionId: null,
+  };
+}
 
 export type Project = typeof applProject;
 export const applProject = {

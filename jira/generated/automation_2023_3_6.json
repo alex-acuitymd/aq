@@ -15,16 +15,21 @@
       "created": 1677511922278,
       "updated": 1678033544741,
       "trigger": {
-        "id": "224960425",
+        "id": "225360019",
         "component": "TRIGGER",
         "parentId": null,
         "conditionParentId": null,
-        "schemaVersion": 1,
-        "type": "jira.manual.trigger.issue",
+        "schemaVersion": 2,
+        "type": "jira.issue.field.changed",
         "value": {
-          "groups": [],
-          "inputFromUsers": false,
-          "inputPrompts": []
+          "changeType": "ANY_CHANGE",
+          "fields": [
+            {
+              "value": "components",
+              "type": "field"
+            }
+          ],
+          "actions": []
         },
         "children": [],
         "conditions": [],

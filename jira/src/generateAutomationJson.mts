@@ -5,8 +5,8 @@ import {
   automation,
   conditionContainerBlock,
   conditionIfBlock,
+  fieldChangeTrigger,
   jqlCondition,
-  manualTrigger,
   removeLabel,
   rule,
 } from "./automation.mjs";
@@ -18,7 +18,7 @@ export default function generateAutomationJson(teamComponents: TeamComponents) {
     automation([
       rule(
         "zzz_aq_components",
-        manualTrigger,
+        fieldChangeTrigger("components"),
         [
           ...[...teamComponents.keys()].map((k) => {
             const teamFilter = componentsFilter(
