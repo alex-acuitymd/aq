@@ -13,11 +13,11 @@ export function componentsFilter(components: Set<Component>) {
   ]);
 }
 
+// filter combination
 export function or(s: string[]) {
   return perens(s.join(" OR "));
 }
 
-// filter combination
 export function and(s: string[]) {
   return perens(s.join(" AND "));
 }

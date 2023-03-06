@@ -156,25 +156,24 @@ export function jqlCondition(value: string) {
 export type Operation =
   | ReturnType<typeof addLabel>
   | ReturnType<typeof removeLabel>;
+
 export function addLabel(value: string) {
-  return {
-    field: { type: "ID", value: "labels" },
-    fieldType: "labels",
-    type: "ADDREMOVE",
-    value: {
-      ADD: [{ type: "FREE", value }], // todo: check why "FREE"
-      REMOVE: [],
-    },
-  } as const;
+  return addRemoveLabel(value, "add");
 }
+
 export function removeLabel(value: string) {
+  return addRemoveLabel(value, "remove");
+}
+type AddRemove = "add" | "remove";
+function addRemoveLabel(value: string, addRemove: AddRemove) {
+  const label = { type: "FREE", value }; // todo: check why "FREE"
   return {
     field: { type: "ID", value: "labels" },
     fieldType: "labels",
     type: "ADDREMOVE",
     value: {
-      ADD: [],
-      REMOVE: [{ type: "FREE", value }], // todo: check why "FREE"
+      ADD: addRemove === "add" ? [label] : [],
+      REMOVE: addRemove === "remove" ? [label] : [],
     },
   } as const;
 }
