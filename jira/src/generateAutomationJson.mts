@@ -13,11 +13,14 @@ import {
 import { componentsFilter } from "./filters.mjs";
 import type { TeamComponents } from "./types.mjs";
 
-export default function generateAutomationJson(teamComponents: TeamComponents) {
+export default function generateAutomationJson(
+  teamComponents: TeamComponents,
+  dateString: string
+) {
   return JSON.stringify(
     automation([
       rule(
-        "zzz_aq_components",
+        `team_components_label_${dateString}`,
         fieldChangeTrigger("components"),
         [
           ...[...teamComponents.keys()].map((k) => {

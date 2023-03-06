@@ -6,37 +6,34 @@ import {
   task,
   unresolved,
 } from "./filters.mjs";
-import { h1, page, teamFilterTable } from "./markdown.mjs";
+import { h1, h2, page, teamFilterTable } from "./markdown.mjs";
 import type { TeamComponents } from "./types.mjs";
 
-export default function generateJiraFilterMarkdown(
-  teamComponents: TeamComponents
+export default function generateFilterMarkdown(
+  teamComponents: TeamComponents,
+  dateString: string
 ) {
   return page(
-    h1("all"),
+    h1(`Filters ${dateString}`),
+    h2("all"),
     ...teamFilterTable(teamComponents, componentsFilter),
-    "",
-    h1("all l30"),
+    h2("all l30"),
     ...teamFilterTable(teamComponents, (components) =>
       and([componentsFilter(components), createdLastThirtyDays])
     ),
-    "",
-    h1("all bugs l30"),
+    h2("all bugs l30"),
     ...teamFilterTable(teamComponents, (components) =>
       and([componentsFilter(components), bug, createdLastThirtyDays])
     ),
-    "",
-    h1("all tasks l30"),
+    h2("all tasks l30"),
     ...teamFilterTable(teamComponents, (components) =>
       and([componentsFilter(components), task, createdLastThirtyDays])
     ),
-    "",
-    h1("unresolved bugs"),
+    h2("unresolved bugs"),
     ...teamFilterTable(teamComponents, (components) =>
       and([componentsFilter(components), bug, unresolved])
     ),
-    "",
-    h1("unresolved tasks"),
+    h2("unresolved tasks"),
     ...teamFilterTable(teamComponents, (components) =>
       and([componentsFilter(components), task, unresolved])
     )

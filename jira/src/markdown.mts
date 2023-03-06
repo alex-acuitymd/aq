@@ -13,6 +13,10 @@ export function h1(s: string) {
   return `# ${s}`;
 }
 
+export function h2(s: string) {
+  return `## ${s}`;
+}
+
 export function teamFilterTable(
   teamComponents: TeamComponents,
   filter: (components: Set<Component>) => string
@@ -34,6 +38,7 @@ export function table(headerRow: string[], body: string[][]) {
     tableRow(headerRow),
     tableRow(headerRow.map(() => "---")),
     ...body.map(tableRow),
+    "",
   ];
 }
 
