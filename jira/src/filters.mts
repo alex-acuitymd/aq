@@ -1,4 +1,5 @@
-import type { Component } from "./types.mjs";
+import { teamComponentsLabel } from "./label.mjs";
+import type { Component, Team } from "./types.mjs";
 
 // conditions
 export const unresolved = "statusCategory != Done";
@@ -7,10 +8,11 @@ export const task = "type = Task";
 export const createdLastThirtyDays = "created >= -30d";
 
 export function componentsFilter(components: Set<Component>) {
-  return and([
-    or([...components].map((c) => `component = "${c}"`)),
-    "project = APPL",
-  ]);
+  return and([`component in (${[...components].join(",")})`, "project = APPL"]);
+}
+
+export function teamComponentsLabelFilter(team: Team) {
+  return `labels = ${teamComponentsLabel(team)}`;
 }
 
 // filter combination

@@ -11,6 +11,7 @@ import {
   rule,
 } from "./automation.mjs";
 import { componentsFilter } from "./filters.mjs";
+import { teamComponentsLabel } from "./label.mjs";
 import type { TeamComponents } from "./types.mjs";
 
 export default function generateAutomationJson(
@@ -27,7 +28,7 @@ export default function generateAutomationJson(
             const teamFilter = componentsFilter(
               teamComponents.get(k) || new Set()
             );
-            const teamLabel = `components:${k}`;
+            const teamLabel = teamComponentsLabel(k);
             return conditionContainerBlock([
               conditionIfBlock(
                 [action([addLabel(teamLabel)])],
