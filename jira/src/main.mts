@@ -8,12 +8,6 @@ import write from "./write.mjs";
   const teamComponents = read();
   const dateString = getDateString();
 
-  write(
-    `filters_${dateString}.md`,
-    generateFilterMarkdown(teamComponents, dateString)
-  );
-  write(
-    `automation_${dateString}.json`,
-    generateAutomationJson(teamComponents, dateString)
-  );
+  write(`filters.md`, generateFilterMarkdown(teamComponents, dateString));
+  write(`automation.json`, generateAutomationJson(teamComponents, dateString));
 })();
