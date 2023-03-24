@@ -8,7 +8,10 @@ export const task = "type = Task";
 export const createdLastThirtyDays = "created >= -30d";
 
 export function componentsFilter(components: Set<Component>) {
-  return and([`component in (${[...components].join(",")})`, "project = APPL"]);
+  return and([
+    `component in (${[...components].map((c) => `"${c}"`).join(",")})`,
+    "project = APPL",
+  ]);
 }
 
 export function teamComponentsLabelFilter(team: Team) {

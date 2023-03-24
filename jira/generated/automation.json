@@ -99,7 +99,7 @@
                   "conditionParentId": "224960427",
                   "schemaVersion": 1,
                   "type": "jira.jql.condition",
-                  "value": "( component in (Account Settings UI,Admin2,Admin3,App UI,Authentication,CI / CD,HCP Details UI,Notification UI,Playground UI,SOC Details UI,Territories QBT,Territories UI,UI Component Library,Usage Tracking) AND project = APPL )",
+                  "value": "( component in (\"Account Settings UI\",\"Admin2\",\"Admin3\",\"App UI\",\"Authentication\",\"CI / CD\",\"HCP Details UI\",\"Notification UI\",\"Playground UI\",\"SOC Details UI\",\"Territories QBT\",\"Territories UI\",\"UI Component Library\",\"Usage Tracking\") AND project = APPL )",
                   "children": [],
                   "conditions": [],
                   "connectionId": null
@@ -223,7 +223,7 @@
                   "conditionParentId": "224960427",
                   "schemaVersion": 1,
                   "type": "jira.jql.condition",
-                  "value": "( component in (Activity UI,Education UI,ESP,Feature Flags,Industry Relationships UI,JT,Omnisearch UI,Peer Networks UI,Pipeline UI,Profile UI,Publications UI,Recs,Shared Filters,SOC Quality of Care UI,SOC Sales History UI,Targeting List UI) AND project = APPL )",
+                  "value": "( component in (\"Activity UI\",\"Education UI\",\"ESP\",\"Feature Flags\",\"Industry Relationships UI\",\"JT\",\"Omnisearch UI\",\"Peer Networks UI\",\"Pipeline UI\",\"Profile UI\",\"Publications UI\",\"Recs\",\"Shared Filters\",\"SOC Quality of Care UI\",\"SOC Sales History UI\",\"Targeting List UI\") AND project = APPL )",
                   "children": [],
                   "conditions": [],
                   "connectionId": null
@@ -347,7 +347,7 @@
                   "conditionParentId": "224960427",
                   "schemaVersion": 1,
                   "type": "jira.jql.condition",
-                  "value": "( component in (Clinical Practice QBT,Clinical Practice UI,Explore QBT,Explore UI,iOS App,Markets QBT,Markets UI,Payer Mix UI,QBT Client Library,QBT Core,Referrals QBT,Referrals UI,Targeting QBT,Targeting Table UI,Targeting UI) AND project = APPL )",
+                  "value": "( component in (\"Clinical Practice QBT\",\"Clinical Practice UI\",\"Explore QBT\",\"Explore UI\",\"iOS App\",\"Markets QBT\",\"Markets UI\",\"Payer Mix UI\",\"QBT Client Library\",\"QBT Core\",\"Referrals QBT\",\"Referrals UI\",\"Targeting QBT\",\"Targeting Table UI\",\"Targeting UI\") AND project = APPL )",
                   "children": [],
                   "conditions": [],
                   "connectionId": null
