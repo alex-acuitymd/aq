@@ -1,37 +1,46 @@
-﻿Name,Owner,Type,Jira Component
-Account Settings UI,Bear,React Subtree,
-Activity UI,Lion,React Subtree,
-Admin UI,Bear,React Subtree,
-App UI,Bear,React Subtree,
-Authentication,Bear,Jira Only,
-CI / CD,Bear,Jira Only,
-Clinical Practice UI,Tiger,React Subtree,
-Education UI,Lion,React Subtree,
-ESP,Lion,Jira Only,
-Explore QBT,Tiger,QBT Module,
-Explore UI,Tiger,React Subtree,
-Industry Relationships UI,Lion,React Subtree,
-JT,Lion,Jira Only,
-Markets QBT,Tiger,QBT Module,
-Markets UI,Tiger,React Subtree,
-Notification UI,Bear,React Subtree,
-Omnisearch UI,Lion,React Subtree,
-Payer Mix UI,Tiger,React Subtree,
-Peer Networks UI,Lion,React Subtree,
-Pipeline UI,Lion,React Subtree,
-Playground UI,Bear,React Subtree,
-Profile UI,Lion,React Subtree,
-Publications UI,Lion,React Subtree,
-QBT Core,Tiger,Jira Only,
-Recs,Lion,Jira Only,
-Referrals QBT,Tiger,QBT Module,
-Referrals UI,Tiger,React Subtree,
-Shared Filters,Lion,Jira Only,
-Targeting List UI,Lion,React Subtree,
-Targeting QBT,Tiger,QBT Module,
-Targeting Table UI,Tiger,React Subtree,
-Targeting UI,Tiger,React Subtree,
-Territories QBT,Bear,QBT Module,
-Territories UI,Bear,React Subtree,
-UI Component Library,Bear,Jira Only,
-Usage Tracking,Bear,Jira Only,
+﻿Name,Affiliated team,Component family,Type,Screenshots,Affinity
+Account Settings UI,Bear,,React Subtree,Team%20Component%20Affiliation%20be5b554a52e84ffbbea663307c44a2b5/Screen_Shot_2023-02-06_at_13.07.52.png,low
+Activity UI,Lion,Profile,React Subtree,,low
+Admin2,Bear,,React Subtree,,low
+Admin3,Bear,,Jira Only,,low
+App UI,Bear,,React Subtree,,low
+Authentication,Bear,,Jira Only,,low
+CI / CD,Bear,,Jira Only,,low
+Clinical Practice QBT,Tiger,Profile,QBT Module,,medium
+Clinical Practice UI,Tiger,Profile,React Subtree,,medium
+Education UI,Lion,Profile,React Subtree,,low
+ESP,Lion,Search,Jira Only,,low
+Explore QBT,Tiger,Explore,QBT Module,,high
+Explore UI,Tiger,Explore,React Subtree,Team%20Component%20Affiliation%20be5b554a52e84ffbbea663307c44a2b5/Screen_Shot_2023-02-06_at_12.56.45.png,high
+Feature Flags,Lion,,Jira Only,,high
+HCP Details UI,Bear,Profile,React Subtree,,low
+Industry Relationships UI,Lion,Profile,React Subtree,,low
+iOS App,Tiger,,Jira Only,,medium
+JT,Lion,,Jira Only,,low
+Markets QBT,Tiger,Markets,QBT Module,,high
+Markets UI,Tiger,Markets,React Subtree,,high
+Notification UI,Bear,,React Subtree,,low
+Omnisearch UI,Lion,Search,React Subtree,,low
+Payer Mix UI,Tiger,Profile,React Subtree,,high
+Peer Networks UI,Lion,Profile,React Subtree,,low
+Pipeline UI,Lion,Pipeline,React Subtree,,high
+Playground UI,Bear,,React Subtree,,low
+Profile UI,Lion,Profile,React Subtree,,low
+Publications UI,Lion,Profile,React Subtree,,low
+QBT Client Library,Tiger,,Jira Only,,low
+QBT Core,Tiger,,Jira Only,,high
+Recs,Lion,Profile,Jira Only,,low
+Referrals QBT,Tiger,Profile,QBT Module,,high
+Referrals UI,Tiger,Profile,React Subtree,,high
+Shared Filters,Lion,,Jira Only,,low
+SOC Details UI,Bear,Profile,React Subtree,,low
+SOC Quality of Care UI,Lion,Profile,React Subtree,,low
+SOC Sales History UI,Lion,Profile,React Subtree,,low
+Targeting List UI,Lion,Targeting,React Subtree,,low
+Targeting QBT,Tiger,Targeting,QBT Module,,low
+Targeting Table UI,Tiger,Targeting,React Subtree,,low
+Targeting UI,Tiger,Targeting,React Subtree,,low
+Territories QBT,Bear,Territories,QBT Module,,low
+Territories UI,Bear,Territories,React Subtree,,low
+UI Component Library,Bear,,Jira Only,,low
+Usage Tracking,Bear,,Jira Only,,low
