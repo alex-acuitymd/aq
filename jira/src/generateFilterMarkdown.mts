@@ -1,41 +1,75 @@
 import {
   and,
   bug,
-  componentsFilter,
-  createdLastThirtyDays,
-  task,
-  unresolved,
+  componentEmpty,
+  createdWithinPastTwoDays,
+  createdWithinPastThirtyDays,
+  not,
+  priorityEmpty,
+  project,
+  teamComponentsLabelFilter,
+  resolved,
 } from "./filters.mjs";
-import { h1, h2, page, teamFilterTable } from "./markdown.mjs";
-import type { TeamComponents } from "./types.mjs";
+import { filterLink, h1, h2, page, table } from "./markdown.mjs";
+import type { Team } from "./types.mjs";
 
 export default function generateFilterMarkdown(
-  teamComponents: TeamComponents,
+  teams: Set<Team>,
   dateString: string
 ) {
   return page(
     h1(`Filters ${dateString}`),
-    h2("all"),
-    ...teamFilterTable(teamComponents, componentsFilter),
-    h2("all l30"),
-    ...teamFilterTable(teamComponents, (components) =>
-      and([componentsFilter(components), createdLastThirtyDays])
+    h2("Across teams"),
+    ...table(
+      ["Description", "Filter"],
+      [
+        [
+          "Missing component",
+          filterLink(and([project, bug, not(resolved), componentEmpty])),
+        ],
+      ]
     ),
-    h2("all bugs l30"),
-    ...teamFilterTable(teamComponents, (components) =>
-      and([componentsFilter(components), bug, createdLastThirtyDays])
-    ),
-    h2("all tasks l30"),
-    ...teamFilterTable(teamComponents, (components) =>
-      and([componentsFilter(components), task, createdLastThirtyDays])
-    ),
-    h2("unresolved bugs"),
-    ...teamFilterTable(teamComponents, (components) =>
-      and([componentsFilter(components), bug, unresolved])
-    ),
-    h2("unresolved tasks"),
-    ...teamFilterTable(teamComponents, (components) =>
-      and([componentsFilter(components), task, unresolved])
-    )
+    ...[...teams].reduce<string[]>((memo, t) => {
+      memo.push(...teamSection(t));
+      return memo;
+    }, [])
   );
+}
+
+function teamSection(team: Team) {
+  const baseFilters = [
+    project,
+    bug,
+    not(resolved),
+    teamComponentsLabelFilter(team),
+  ];
+  return [
+    h2(team),
+    ...table(
+      ["Description", "Filter"],
+      [
+        ["Needs triage", filterLink(and([...baseFilters, priorityEmpty]))],
+        [
+          "Needs triage (out of SLA)",
+          filterLink(
+            and([...baseFilters, priorityEmpty, not(createdWithinPastTwoDays)])
+          ),
+        ],
+        [
+          "Needs resolution",
+          filterLink(and([...baseFilters, not(priorityEmpty)])),
+        ],
+        [
+          "Needs resolution (out of SLA)",
+          filterLink(
+            and([
+              ...baseFilters,
+              not(priorityEmpty),
+              not(createdWithinPastThirtyDays),
+            ])
+          ),
+        ],
+      ]
+    ),
+  ];
 }

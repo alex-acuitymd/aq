@@ -10,12 +10,14 @@ export default function read() {
     .map((row) => row.split(","));
 
   const teamComponents: TeamComponents = new Map();
+  const teams = new Set<Team>();
   arr.forEach((vals) => {
     const [component, team] = vals as [Component, Team];
+    teams.add(team);
     if (!teamComponents.has(team)) {
       teamComponents.set(team, new Set());
     }
     teamComponents.get(team)?.add(component);
   });
-  return teamComponents;
+  return { teamComponents, teams };
 }

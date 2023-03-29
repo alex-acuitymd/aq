@@ -2,15 +2,22 @@ import { teamComponentsLabel } from "./label.mjs";
 import type { Component, Team } from "./types.mjs";
 
 // conditions
-export const unresolved = "statusCategory != Done";
+export const resolved = "statusCategory = Done";
 export const bug = "type = Bug";
 export const task = "type = Task";
-export const createdLastThirtyDays = "created >= -30d";
+export const createdWithinPastThirtyDays = "created >= -30d";
+export const createdWithinPastTwoDays = "created >= -2d";
+
+export const project = "project = APPL";
+
+export const componentEmpty = "component is EMPTY";
+
+export const priorityEmpty = "priority is EMPTY";
 
 export function componentsFilter(components: Set<Component>) {
   return and([
     `component in (${[...components].map((c) => `"${c}"`).join(",")})`,
-    "project = APPL",
+    project,
   ]);
 }
 
@@ -29,4 +36,8 @@ export function and(s: string[]) {
 
 export function perens(s: string) {
   return `( ${s} )`;
+}
+
+export function not(s: string) {
+  return `not( ${s} )`;
 }

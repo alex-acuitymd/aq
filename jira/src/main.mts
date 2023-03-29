@@ -5,9 +5,9 @@ import read from "./read.mjs";
 import write from "./write.mjs";
 
 (function () {
-  const teamComponents = read();
+  const { teams, teamComponents } = read();
   const dateString = getDateString();
 
-  write(`filters.md`, generateFilterMarkdown(teamComponents, dateString));
+  write(`filters.md`, generateFilterMarkdown(teams, dateString));
   write(`automation.json`, generateAutomationJson(teamComponents, dateString));
 })();

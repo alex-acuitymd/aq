@@ -1,8 +1,8 @@
 import { EOL } from "os";
 import type { Component, TeamComponents } from "./types.mjs";
 
-export function link(s: string) {
-  return `[link](https://acuitymd.atlassian.net/issues/?jql=${encodeURI(s)})`;
+export function filterLink(s: string) {
+  return `[${s}](https://acuitymd.atlassian.net/issues/?jql=${encodeURI(s)})`;
 }
 
 export function page(...lines: string[]) {
@@ -22,12 +22,11 @@ export function teamFilterTable(
   filter: (components: Set<Component>) => string
 ) {
   return table(
-    ["team", "filter", "link"],
+    ["team", "filter"],
     [
       ...[...teamComponents.keys()].map((k) => {
         const filterString = filter(teamComponents.get(k) || new Set());
-        const filterLink = link(filterString);
-        return [k, filterString, filterLink];
+        return [k, filterLink(filterString)];
       }),
     ]
   );
