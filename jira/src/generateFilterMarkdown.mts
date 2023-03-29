@@ -2,13 +2,12 @@ import {
   and,
   bug,
   componentEmpty,
-  createdWithinPastTwoDays,
   createdWithinPastThirtyDays,
   not,
-  priorityEmpty,
   project,
   teamComponentsLabelFilter,
   resolved,
+  createdWithinPastDay,
 } from "./filters.mjs";
 import { filterLink, h1, h2, page, table } from "./markdown.mjs";
 import type { Team } from "./types.mjs";
@@ -17,15 +16,24 @@ export default function generateFilterMarkdown(
   teams: Set<Team>,
   dateString: string
 ) {
+  const missingComponentCommon = [
+    project,
+    bug,
+    componentEmpty,
+    createdWithinPastThirtyDays,
+  ];
   return page(
     h1(`Filters ${dateString}`),
     h2("Across teams"),
     ...table(
       ["Description", "Filter"],
       [
+        ["Missing component", filterLink(and(missingComponentCommon))],
         [
-          "Missing component",
-          filterLink(and([project, bug, not(resolved), componentEmpty])),
+          "Missing component (Out of SLA)",
+          filterLink(
+            and([...missingComponentCommon, not(createdWithinPastDay)])
+          ),
         ],
       ]
     ),
@@ -48,26 +56,10 @@ function teamSection(team: Team) {
     ...table(
       ["Description", "Filter"],
       [
-        ["Needs triage", filterLink(and([...baseFilters, priorityEmpty]))],
-        [
-          "Needs triage (out of SLA)",
-          filterLink(
-            and([...baseFilters, priorityEmpty, not(createdWithinPastTwoDays)])
-          ),
-        ],
-        [
-          "Needs resolution",
-          filterLink(and([...baseFilters, not(priorityEmpty)])),
-        ],
+        ["Needs resolution", filterLink(and([...baseFilters]))],
         [
           "Needs resolution (out of SLA)",
-          filterLink(
-            and([
-              ...baseFilters,
-              not(priorityEmpty),
-              not(createdWithinPastThirtyDays),
-            ])
-          ),
+          filterLink(and([...baseFilters, not(createdWithinPastThirtyDays)])),
         ],
       ]
     ),

@@ -7,6 +7,7 @@ export const bug = "type = Bug";
 export const task = "type = Task";
 export const createdWithinPastThirtyDays = "created >= -30d";
 export const createdWithinPastTwoDays = "created >= -2d";
+export const createdWithinPastDay = "created >= -1d";
 
 export const project = "project = APPL";
 
