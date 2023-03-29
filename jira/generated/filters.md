@@ -4,6 +4,7 @@
 | --- | --- |
 | Missing component | [( project = APPL AND type = Bug AND component is EMPTY AND created >= -30d )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20component%20is%20EMPTY%20AND%20created%20%3E=%20-30d%20)) |
 | Missing component (Out of SLA) | [( project = APPL AND type = Bug AND component is EMPTY AND created >= -30d AND not( created >= -1d ) )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20component%20is%20EMPTY%20AND%20created%20%3E=%20-30d%20AND%20not(%20created%20%3E=%20-1d%20)%20)) |
+| Needs resolution (out of SLA) | [( project = APPL AND type = Bug AND not( statusCategory = Done ) AND not( component is EMPTY ) AND not( created >= -30d ) )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20not(%20statusCategory%20=%20Done%20)%20AND%20not(%20component%20is%20EMPTY%20)%20AND%20not(%20created%20%3E=%20-30d%20)%20)) |
 
 ## Bear
 | Description | Filter |

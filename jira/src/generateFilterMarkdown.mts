@@ -35,6 +35,18 @@ export default function generateFilterMarkdown(
             and([...missingComponentCommon, not(createdWithinPastDay)])
           ),
         ],
+        [
+          "Needs resolution (out of SLA)",
+          filterLink(
+            and([
+              project,
+              bug,
+              not(resolved),
+              not(componentEmpty),
+              not(createdWithinPastThirtyDays),
+            ])
+          ),
+        ],
       ]
     ),
     ...[...teams].reduce<string[]>((memo, t) => {
