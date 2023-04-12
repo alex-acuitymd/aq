@@ -8,6 +8,7 @@ import {
   teamComponentsLabelFilter,
   resolved,
   createdWithinPastDay,
+  createdBeforeAprilTwelfth,
 } from "./filters.mjs";
 import { filterLink, h1, h2, page, table } from "./markdown.mjs";
 import type { Team } from "./types.mjs";
@@ -72,6 +73,10 @@ function teamSection(team: Team) {
         [
           "Needs resolution (out of SLA)",
           filterLink(and([...baseFilters, not(createdWithinPastThirtyDays)])),
+        ],
+        [
+          "Needs resolution (clean slate 5/1)",
+          filterLink(and([...baseFilters, createdBeforeAprilTwelfth])),
         ],
       ]
     ),

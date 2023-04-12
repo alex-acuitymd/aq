@@ -9,6 +9,8 @@ export const createdWithinPastThirtyDays = "created >= -30d";
 export const createdWithinPastTwoDays = "created >= -2d";
 export const createdWithinPastDay = "created >= -1d";
 
+export const createdBeforeAprilTwelfth = "created <= 2023-04-12";
+
 export const project = "project = APPL";
 
 export const componentEmpty = "component is EMPTY";
