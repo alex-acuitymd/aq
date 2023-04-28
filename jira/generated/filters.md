@@ -11,7 +11,7 @@
 | --- | --- |
 | Needs resolution | [( project = APPL AND type = Bug AND not( statusCategory = Done ) AND labels = components:Bear )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20not(%20statusCategory%20=%20Done%20)%20AND%20labels%20=%20components:Bear%20)) |
 | Needs resolution (out of SLA) | [( project = APPL AND type = Bug AND not( statusCategory = Done ) AND labels = components:Bear AND not( created >= -30d ) )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20not(%20statusCategory%20=%20Done%20)%20AND%20labels%20=%20components:Bear%20AND%20not(%20created%20%3E=%20-30d%20)%20)) |
-| Needs resolution (clean slate 5/1) | [( project = APPL AND type = Bug AND not( statusCategory = Done ) AND labels = components:Bear AND created <= 2023-04-12 AND labels = "bear" )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20not(%20statusCategory%20=%20Done%20)%20AND%20labels%20=%20components:Bear%20AND%20created%20%3C=%202023-04-12%20AND%20labels%20=%20%22bear%22%20)) |
+| Needs resolution (clean slate 5/1) | [( project = APPL AND type = Bug AND not( statusCategory = Done ) AND labels = components:Bear AND created <= 2023-04-12 AND labels != "bear" )](https://acuitymd.atlassian.net/issues/?jql=(%20project%20=%20APPL%20AND%20type%20=%20Bug%20AND%20not(%20statusCategory%20=%20Done%20)%20AND%20labels%20=%20components:Bear%20AND%20created%20%3C=%202023-04-12%20AND%20labels%20!=%20%22bear%22%20)) |
 
 ## Lion
 | Description | Filter |

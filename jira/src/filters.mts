@@ -34,7 +34,7 @@ export function teamCleanSlateCondition(team: Team) {
   } else if (team === "Tiger") {
     return "Sprint not in (162, 168)";
   } else if (team === "Bear") {
-    return `labels = "bear"`;
+    return `labels != "bear"`;
   } else {
     console.log(`Unknown team: ${team}`);
     return "";
