@@ -9,6 +9,7 @@ import {
   resolved,
   createdWithinPastDay,
   createdBeforeAprilTwelfth,
+  teamCleanSlateCondition,
 } from "./filters.mjs";
 import { filterLink, h1, h2, page, table } from "./markdown.mjs";
 import type { Team } from "./types.mjs";
@@ -76,7 +77,13 @@ function teamSection(team: Team) {
         ],
         [
           "Needs resolution (clean slate 5/1)",
-          filterLink(and([...baseFilters, createdBeforeAprilTwelfth])),
+          filterLink(
+            and([
+              ...baseFilters,
+              createdBeforeAprilTwelfth,
+              teamCleanSlateCondition(team),
+            ])
+          ),
         ],
       ]
     ),

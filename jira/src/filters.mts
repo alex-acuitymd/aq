@@ -28,6 +28,19 @@ export function teamComponentsLabelFilter(team: Team) {
   return `labels = ${teamComponentsLabel(team)}`;
 }
 
+export function teamCleanSlateCondition(team: Team) {
+  if (team === "Lion") {
+    return "Sprint not in (164, 171)";
+  } else if (team === "Tiger") {
+    return "Sprint not in (162, 168)";
+  } else if (team === "Bear") {
+    return `labels = "bear"`;
+  } else {
+    console.log(`Unknown team: ${team}`);
+    return "";
+  }
+}
+
 // filter combination
 export function or(s: string[]) {
   return perens(s.join(" OR "));
