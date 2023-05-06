@@ -8,8 +8,12 @@ import {
   teamComponentsLabelFilter,
   resolved,
   createdWithinPastDay,
-  createdBeforeAprilTwelfth,
-  teamCleanSlateCondition,
+  newBug,
+  newBugSlo,
+  deferred,
+  deferredBugSlo,
+  revived,
+  revivedSlo,
 } from "./filters.mjs";
 import { filterLink, h1, h2, page, table } from "./markdown.mjs";
 import type { Team } from "./types.mjs";
@@ -59,31 +63,24 @@ export default function generateFilterMarkdown(
 }
 
 function teamSection(team: Team) {
-  const baseFilters = [
-    project,
-    bug,
-    not(resolved),
-    teamComponentsLabelFilter(team),
-  ];
+  const baseFilters = [project, bug, teamComponentsLabelFilter(team)];
   return [
     h2(team),
     ...table(
       ["Description", "Filter"],
       [
         ["Needs resolution", filterLink(and([...baseFilters]))],
+        ["New bug", filterLink(and([...baseFilters, newBug]))],
+        ["New bug (out of SLO)", filterLink(and([...baseFilters, newBugSlo]))],
+        ["Deferred bug", filterLink(and([...baseFilters, deferred]))],
         [
-          "Needs resolution (out of SLA)",
-          filterLink(and([...baseFilters, not(createdWithinPastThirtyDays)])),
+          "Deferred bug (out of SLO)",
+          filterLink(and([...baseFilters, deferredBugSlo])),
         ],
+        ["Revived bug", filterLink(and([...baseFilters, revived]))],
         [
-          "Needs resolution (clean slate 5/1)",
-          filterLink(
-            and([
-              ...baseFilters,
-              createdBeforeAprilTwelfth,
-              teamCleanSlateCondition(team),
-            ])
-          ),
+          "Revived bug (out of SLO)",
+          filterLink(and([...baseFilters, revivedSlo])),
         ],
       ]
     ),
