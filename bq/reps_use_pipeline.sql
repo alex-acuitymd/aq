@@ -566,10 +566,10 @@ WITH
     active_user_windows / cal_days AS active_user_windows_per_cal_day,
     inactive_user_windows / cal_days AS inactive_user_windows_per_cal_day,
   FROM
-    calendar_month_stats
-  ORDER BY
-    cal_month_start)
+    calendar_month_stats)
 SELECT
   *
 FROM
-  calendar_month_stats2;
+  calendar_month_stats2
+ORDER BY
+    cal_month_start;
