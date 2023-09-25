@@ -295,7 +295,7 @@ DECLARE
   FROM
     user_windows2;
   CREATE OR REPLACE TABLE
-    `zz_aq_dataset.pipline_org_windows` ( --
+    `zz_aq_dataset.pipeline_org_windows` ( --
       org_id INT64 NOT NULL,
       roll_30_end DATE NOT NULL,
       user_count INT64 NOT NULL,
@@ -310,7 +310,7 @@ DECLARE
       events_per_day FLOAT64 NOT NULL,
       events_per_active_day FLOAT64);
   INSERT INTO
-    `zz_aq_dataset.pipline_org_windows` ( --
+    `zz_aq_dataset.pipeline_org_windows` ( --
       org_id,
       roll_30_end,
       user_count,
@@ -407,7 +407,7 @@ DECLARE
       SUM(active_days) AS active_days,
       SUM(event_count) AS event_count
     FROM
-      `zz_aq_dataset.pipline_org_windows`
+      `zz_aq_dataset.pipeline_org_windows`
     GROUP BY
       roll_30_end),
     /***********
@@ -423,13 +423,13 @@ DECLARE
     IF
       (active_days != 0, event_count / active_days, NULL) AS events_per_active_day,
     FROM
-      window_stats
-    ORDER BY
-      roll_30_end)
+      window_stats)
   SELECT
     *
   FROM
-    window_stats2;
+    window_stats2
+  ORDER BY
+    roll_30_end;
   
   
   
@@ -478,6 +478,73 @@ WITH
        * calculate
        */ calendar_month_stats2 AS (
   SELECT
+    cal_month_start,
+    active_user_windows / user_windows AS percent_active_users,
+    cal_days,
+    user_windows / cal_days AS user_windows_per_cal_day,
+    active_user_windows / cal_days AS active_user_windows_per_cal_day,
+    inactive_user_windows / cal_days AS inactive_user_windows_per_cal_day,
+  FROM
+    calendar_month_stats
+  ORDER BY
+    cal_month_start)
+SELECT
+  *
+FROM
+  calendar_month_stats2;
+
+
+-- calendar month stat by org
+CREATE OR REPLACE TABLE
+  `zz_aq_dataset.pipeline_org_stat` ( --
+    org_id INT64 NOT NULL,
+    cal_month_start DATE NOT NULL,
+    percent_active_users FLOAT64 NOT NULL,
+    cal_days INT64 NOT NULL,
+    user_windows_per_cal_day FLOAT64 NOT NULL,
+    active_user_windows_per_cal_day FLOAT64 NOT NULL,
+    inactive_user_windows_per_cal_day FLOAT64 NOT NULL);
+INSERT INTO
+  `zz_aq_dataset.pipeline_org_stat` ( --
+    org_id,
+    cal_month_start,
+    percent_active_users,
+    cal_days,
+    user_windows_per_cal_day,
+    active_user_windows_per_cal_day,
+    inactive_user_windows_per_cal_day)
+WITH
+  /*********** 
+       * calendar_month_stats
+       * aggregate rolling windows that end in the month
+       * ...sum first to avoid averages of averages
+       */ calendar_month_stats AS (
+  SELECT
+    window_stats2.org_id,
+    days.cal_month_start,
+    COUNT(*) AS cal_days,
+    SUM(window_stats2.user_count) AS user_windows,
+    SUM(window_stats2.active_users) AS active_user_windows,
+    SUM(window_stats2.inactive_users) AS inactive_user_windows,
+  FROM
+    `zz_aq_dataset.days` AS days
+  LEFT OUTER JOIN
+    `zz_aq_dataset.pipeline_org_windows` AS window_stats2
+  ON
+    window_stats2.roll_30_end = days.roll_30_end
+  WHERE
+    window_stats2.org_id IS NOT NULL
+    AND days.roll_30_end >= report_start
+    AND days.roll_30_end <= end_complete_month
+  GROUP BY
+    window_stats2.org_id,
+    days.cal_month_start ),
+  /***********
+       * calendar_month_stats2
+       * calculate
+       */ calendar_month_stats2 AS (
+  SELECT
+    org_id,
     cal_month_start,
     active_user_windows / user_windows AS percent_active_users,
     cal_days,
