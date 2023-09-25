@@ -12,36 +12,36 @@ DECLARE
   
   
   
-  CREATE OR REPLACE TABLE
-    `zz_aq_dataset.days` ( -- days
-      day DATE,
-      cal_month_start DATE,
-      cal_month_end DATE,
-      roll_7_start DATE,
-      roll_7_end DATE,
-      roll_30_start DATE,
-      roll_30_end DATE);
-  INSERT INTO
-    `zz_aq_dataset.days` ( --
-      day,
-      cal_month_start,
-      cal_month_end,
-      roll_7_start,
-      roll_7_end,
-      roll_30_start,
-      roll_30_end)
-  SELECT
+CREATE OR REPLACE TABLE
+  `zz_aq_dataset.days` ( -- days
+    day DATE,
+    cal_month_start DATE,
+    cal_month_end DATE,
+    roll_7_start DATE,
+    roll_7_end DATE,
+    roll_30_start DATE,
+    roll_30_end DATE);
+INSERT INTO
+  `zz_aq_dataset.days` ( --
     day,
-    DATE_TRUNC(day, MONTH) AS cal_month_start,
-    LAST_DAY(day, MONTH) AS cal_month_end,
-    DATE_SUB(day, INTERVAL 6 DAY) AS roll_7_start,
-    day AS roll_7_end,
-    DATE_SUB(day, INTERVAL 29 DAY) AS roll_30_start,
-    day AS roll_30_end
-  FROM
-    UNNEST(GENERATE_DATE_ARRAY(data_start, today, INTERVAL 1 DAY)) AS day
-  ORDER BY
-    day;
+    cal_month_start,
+    cal_month_end,
+    roll_7_start,
+    roll_7_end,
+    roll_30_start,
+    roll_30_end)
+SELECT
+  day,
+  DATE_TRUNC(day, MONTH) AS cal_month_start,
+  LAST_DAY(day, MONTH) AS cal_month_end,
+  DATE_SUB(day, INTERVAL 6 DAY) AS roll_7_start,
+  day AS roll_7_end,
+  DATE_SUB(day, INTERVAL 29 DAY) AS roll_30_start,
+  day AS roll_30_end
+FROM
+  UNNEST(GENERATE_DATE_ARRAY(data_start, today, INTERVAL 1 DAY)) AS day
+ORDER BY
+  day;
   
   
   
@@ -61,7 +61,7 @@ DECLARE
     ("Helios", DATE('2023-07-01'), 398),
     ("LivsMed", DATE('2023-08-24'), 869),
     ("Anika", DATE('2023-07-01'), 83 );
---    ("Anika", DATE('2023-10-01'), 83 );
+--    ("Anika", DATE('2023-10-01'), 83 ); -- still deciding which start date to use
   
   
   
@@ -89,7 +89,9 @@ DECLARE
     FROM
       `app_db_replicas.auth_user`
     WHERE
-      job = "SALES_REP"),
+      job = "SALES_REP"
+      OR id = 145263 -- P.J. is an exec that manages opps in acuity on behalf of his sales team
+    ),
     /***********
       * users2
       * join to org onboarded
@@ -184,11 +186,13 @@ DECLARE
     `zz_aq_dataset.pipeline_user_eligible_days` ( --
       day DATE NOT NULL,
       user_id INT64 NOT NULL,
+      org_id INT64 NOT NULL,
       event_count INT64 NOT NULL);
   INSERT INTO
     `zz_aq_dataset.pipeline_user_eligible_days` ( --
       day,
       user_id,
+      org_id,
       event_count)
   WITH
     /***********
@@ -197,7 +201,8 @@ DECLARE
          */ user_exist_days AS (
     SELECT
       day,
-      id AS user_id
+      id AS user_id,
+      org_id
     FROM
       `zz_aq_dataset.pipeline_rep_users` AS users
     INNER JOIN
@@ -213,6 +218,7 @@ DECLARE
     SELECT
       user_exist_days.day,
       user_exist_days.user_id,
+      user_exist_days.org_id,
       COALESCE(user_daily_events.event_count, 0) AS event_count
     FROM
       user_exist_days
@@ -231,8 +237,9 @@ DECLARE
   
   CREATE OR REPLACE TABLE
     `zz_aq_dataset.pipeline_user_windows` ( --
-      roll_30_end DATE NOT NULL,
       user_id INT64 NOT NULL,
+      org_id INT64 NOT NULL,
+      roll_30_end DATE NOT NULL,
       user_days INT64 NOT NULL,
       active_days INT64 NOT NULL,
       event_count INT64 NOT NULL,
@@ -242,8 +249,9 @@ DECLARE
       events_per_active_day FLOAT64);
   INSERT INTO
     `zz_aq_dataset.pipeline_user_windows` ( --
-      roll_30_end,
       user_id,
+      org_id,
+      roll_30_end,
       user_days,
       active_days,
       event_count,
@@ -257,8 +265,9 @@ DECLARE
        * row for each window a user existed
        */ user_windows AS (
     SELECT
-      days.roll_30_end,
       user_exist_days2.user_id,
+      user_exist_days2.org_id,
+      days.roll_30_end,
       COUNT(*) AS user_days,
       COUNTIF(user_exist_days2.event_count > 0) AS active_days,
       SUM(user_exist_days2.event_count) AS event_count
@@ -271,7 +280,8 @@ DECLARE
       AND days.roll_30_start <= user_exist_days2.day
     GROUP BY
       days.roll_30_end,
-      user_exist_days2.user_id ),
+      user_exist_days2.user_id,
+      user_exist_days2.org_id ),
     /***********
        * user_windows2
        * filter to complete windows
@@ -294,6 +304,10 @@ DECLARE
     *
   FROM
     user_windows2;
+
+
+
+
   CREATE OR REPLACE TABLE
     `zz_aq_dataset.pipeline_org_windows` ( --
       org_id INT64 NOT NULL,
@@ -485,13 +499,13 @@ WITH
     active_user_windows / cal_days AS active_user_windows_per_cal_day,
     inactive_user_windows / cal_days AS inactive_user_windows_per_cal_day,
   FROM
-    calendar_month_stats
-  ORDER BY
-    cal_month_start)
+    calendar_month_stats)
 SELECT
   *
 FROM
-  calendar_month_stats2;
+  calendar_month_stats2
+ORDER BY
+  cal_month_start;
 
 
 -- calendar month stat by org
