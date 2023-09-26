@@ -17,6 +17,7 @@ CREATE OR REPLACE TABLE
     day DATE,
     cal_month_start DATE,
     cal_month_end DATE,
+    cal_month_length INT64 NOT NULL,
     roll_7_start DATE,
     roll_7_end DATE,
     roll_30_start DATE,
@@ -26,6 +27,7 @@ INSERT INTO
     day,
     cal_month_start,
     cal_month_end,
+    cal_month_length,
     roll_7_start,
     roll_7_end,
     roll_30_start,
@@ -34,6 +36,7 @@ SELECT
   day,
   DATE_TRUNC(day, MONTH) AS cal_month_start,
   LAST_DAY(day, MONTH) AS cal_month_end,
+  DATE_DIFF(LAST_DAY(day, MONTH), DATE_TRUNC(day, MONTH), DAY) AS cal_month_length,
   DATE_SUB(day, INTERVAL 6 DAY) AS roll_7_start,
   day AS roll_7_end,
   DATE_SUB(day, INTERVAL 29 DAY) AS roll_30_start,
@@ -452,7 +455,7 @@ CREATE OR REPLACE TABLE
   `zz_aq_dataset.pipeline_stat` ( --
     cal_month_start DATE NOT NULL,
     percent_active_users FLOAT64 NOT NULL,
-    cal_days INT64 NOT NULL,
+    cal_month_length INT64 NOT NULL,
     user_windows_per_cal_day FLOAT64 NOT NULL,
     active_user_windows_per_cal_day FLOAT64 NOT NULL,
     inactive_user_windows_per_cal_day FLOAT64 NOT NULL);
@@ -460,7 +463,7 @@ INSERT INTO
   `zz_aq_dataset.pipeline_stat` ( --
     cal_month_start,
     percent_active_users,
-    cal_days,
+    cal_month_length,
     user_windows_per_cal_day,
     active_user_windows_per_cal_day,
     inactive_user_windows_per_cal_day)
@@ -472,7 +475,7 @@ WITH
        */ calendar_month_stats AS (
   SELECT
     days.cal_month_start,
-    COUNT(*) AS cal_days,
+    days.cal_month_length,
     SUM(window_stats2.user_count) AS user_windows,
     SUM(window_stats2.active_users) AS active_user_windows,
     SUM(window_stats2.inactive_users) AS inactive_user_windows,
@@ -486,7 +489,8 @@ WITH
     days.roll_30_end >= report_start
     AND days.roll_30_end <= end_complete_month
   GROUP BY
-    days.cal_month_start ),
+    days.cal_month_start,
+    days.cal_month_length ),
   /***********
        * calendar_month_stats2
        * calculate
@@ -494,10 +498,10 @@ WITH
   SELECT
     cal_month_start,
     active_user_windows / user_windows AS percent_active_users,
-    cal_days,
-    user_windows / cal_days AS user_windows_per_cal_day,
-    active_user_windows / cal_days AS active_user_windows_per_cal_day,
-    inactive_user_windows / cal_days AS inactive_user_windows_per_cal_day,
+    cal_month_length,
+    user_windows / cal_month_length AS user_windows_per_cal_day,
+    active_user_windows / cal_month_length AS active_user_windows_per_cal_day,
+    inactive_user_windows / cal_month_length AS inactive_user_windows_per_cal_day,
   FROM
     calendar_month_stats)
 SELECT
@@ -514,7 +518,7 @@ CREATE OR REPLACE TABLE
     org_id INT64 NOT NULL,
     cal_month_start DATE NOT NULL,
     percent_active_users FLOAT64 NOT NULL,
-    cal_days INT64 NOT NULL,
+    cal_month_length INT64 NOT NULL,
     user_windows_per_cal_day FLOAT64 NOT NULL,
     active_user_windows_per_cal_day FLOAT64 NOT NULL,
     inactive_user_windows_per_cal_day FLOAT64 NOT NULL);
@@ -523,7 +527,7 @@ INSERT INTO
     org_id,
     cal_month_start,
     percent_active_users,
-    cal_days,
+    cal_month_length,
     user_windows_per_cal_day,
     active_user_windows_per_cal_day,
     inactive_user_windows_per_cal_day)
@@ -536,7 +540,7 @@ WITH
   SELECT
     window_stats2.org_id,
     days.cal_month_start,
-    COUNT(*) AS cal_days,
+    days.cal_month_length,
     SUM(window_stats2.user_count) AS user_windows,
     SUM(window_stats2.active_users) AS active_user_windows,
     SUM(window_stats2.inactive_users) AS inactive_user_windows,
@@ -552,7 +556,8 @@ WITH
     AND days.roll_30_end <= end_complete_month
   GROUP BY
     window_stats2.org_id,
-    days.cal_month_start ),
+    days.cal_month_start,
+    days.cal_month_length),
   /***********
        * calendar_month_stats2
        * calculate
@@ -561,10 +566,10 @@ WITH
     org_id,
     cal_month_start,
     active_user_windows / user_windows AS percent_active_users,
-    cal_days,
-    user_windows / cal_days AS user_windows_per_cal_day,
-    active_user_windows / cal_days AS active_user_windows_per_cal_day,
-    inactive_user_windows / cal_days AS inactive_user_windows_per_cal_day,
+    cal_month_length,
+    user_windows / cal_month_length AS user_windows_per_cal_day,
+    active_user_windows / cal_month_length AS active_user_windows_per_cal_day,
+    inactive_user_windows / cal_month_length AS inactive_user_windows_per_cal_day,
   FROM
     calendar_month_stats)
 SELECT
