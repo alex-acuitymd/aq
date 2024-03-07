@@ -6,6 +6,7 @@ import write from "./write.js";
         const date = new Date(a.jsonPayload.timestamp);
         const dateParts = date.toISOString().split("T");
         return [
+            a.jsonPayload.detail.request_id,
             date.valueOf(),
             dateParts[0],
             dateParts[1].slice(0, -1),
@@ -15,6 +16,7 @@ import write from "./write.js";
         ];
     });
     matrix.unshift([
+        "requestId",
         "millis",
         "date",
         "time",
