@@ -6,6 +6,7 @@ import write from "./write.js";
         const date = new Date(a.jsonPayload.timestamp);
         const dateParts = date.toISOString().split("T");
         return [
+            a.jsonPayload.trace_id,
             a.jsonPayload.detail.request_id,
             date.valueOf(),
             dateParts[0],
@@ -16,6 +17,7 @@ import write from "./write.js";
         ];
     });
     matrix.unshift([
+        "traceId",
         "requestId",
         "millis",
         "date",
@@ -25,9 +27,5 @@ import write from "./write.js";
         "orgId",
     ]);
     write("out.csv", matrix.map((r) => r.join(",")).join(`\n`));
-    // const opNameTop = Array.from(opNameFreq.entries()).sort(
-    //   (a, b) => b[1] - a[1]
-    // );
-    // console.log("top op names::::", opNameTop.slice(0, 5));
 })();
 //# sourceMappingURL=main.js.map

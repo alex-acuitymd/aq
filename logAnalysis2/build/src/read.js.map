@@ -1,0 +1,1 @@
+{"version":3,"file":"read.js","sourceRoot":"","sources":["../../src/read.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAEvC,MAAM,CAAC,OAAO,UAAU,IAAI;IAC1B,MAAM,CAAC,GAAG,YAAY,CAAC,qBAAqB,CAAC,CAAC,QAAQ,EAAE,CAAC;IACzD,OAAO,IAAI,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC;AACvB,CAAC"}
